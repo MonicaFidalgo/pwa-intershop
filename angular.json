@@ -1,0 +1,154 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "intershop-pwa": {
+      "projectType": "application",
+      "cli": {
+        "defaultCollection": "intershop-schematics"
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "ish",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/browser",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
+            "extractCss": true,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              {
+                "input": "src/styles/themes/default/style.scss",
+                "lazy": true,
+                "bundleName": "default"
+              },
+              {
+                "input": "src/styles/themes/blue/style.scss",
+                "lazy": true,
+                "bundleName": "blue"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            },
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ],
+              "sourceMap": true,
+              "extractCss": true
+            },
+            "es5": {
+              "tsConfig": "./tsconfig-es5.app.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "aot": true,
+            "browserTarget": "intershop-pwa:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "intershop-pwa:build:production"
+            },
+            "local": {
+              "browserTarget": "intershop-pwa:build:local"
+            },
+            "es5": {
+              "browserTarget": "intershop-pwa:build:es5"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "intershop-pwa:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["tsconfig.app.json", "tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": {
+                "scripts": false,
+                "styles": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "intershop-pwa"
+}

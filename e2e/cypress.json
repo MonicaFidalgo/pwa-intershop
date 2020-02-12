@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cypress-io/cypress/develop/cli/schema/cypress.schema.json",
+  "baseUrl": "http://localhost:4200",
+  "viewportWidth": 1024,
+  "viewportHeight": 1500,
+  "video": false,
+  "videoUploadOnPasses": false,
+  "testFiles": "**/*.e2e-spec.ts",
+  "defaultCommandTimeout": 8000,
+  "requestTimeout": 30000,
+  "responseTimeout": 30000,
+  "modifyObstructiveCode": false
+}

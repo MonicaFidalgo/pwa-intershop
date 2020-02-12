@@ -1,0 +1,27 @@
+//
+// Page Navigation
+
+.page-navigation {
+  .page-navigation-contents {
+    ul {
+      padding-left: 0;
+      list-style: none outside none;
+
+      &.page-navigation-0 {
+        ul {
+          padding-left: $space-default;
+        }
+      }
+
+      li {
+        line-height: 24px;
+
+        &.page-navigation-active {
+          > a {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}

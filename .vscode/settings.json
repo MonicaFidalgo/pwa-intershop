@@ -1,0 +1,22 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.renderWhitespace": "all",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
+  "tslint.alwaysShowRuleFailuresAsWarnings": true,
+
+  // file type specific settings
+  "[handlebars]": {
+    "editor.formatOnSave": false
+  },
+
+  "files.associations": {
+    "__*.*": "ng-template"
+  },
+
+  "ngschematics.schematics": ["intershop-schematics"],
+  "workbench.iconTheme": "vscode-icons",
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

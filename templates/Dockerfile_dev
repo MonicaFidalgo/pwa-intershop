@@ -1,0 +1,6 @@
+FROM node:12-alpine as buildstep
+COPY . /workspace/
+WORKDIR /workspace
+RUN npm ci
+EXPOSE 8080
+CMD npx ng serve --host 0.0.0.0 --disableHostCheck true --aot --port 8080

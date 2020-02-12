@@ -1,0 +1,7 @@
+<ish-registration-form
+  [languages]="locales"
+  [error]="userError$ | async"
+  (create)="onCreate($event)"
+  (cancel)="onCancel()"
+>
+</ish-registration-form>

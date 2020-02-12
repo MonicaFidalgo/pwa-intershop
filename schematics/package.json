@@ -1,0 +1,58 @@
+{
+  "name": "intershop-schematics",
+  "version": "0.0.1",
+  "description": "Angular CLI schematics for Intershop PWA",
+  "scripts": {
+    "prebuild": "npm ci && npm run generate:schemas && npm test",
+    "build": "tsc",
+    "postbuild": "rimraf node_modules",
+    "test": "jest --ci -i",
+    "generate:schemas": "node scripts/generate-schema-defs.js"
+  },
+  "keywords": [
+    "schematics",
+    "intershop"
+  ],
+  "schematics": "./src/collection.json",
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "/src/.*spec\\.ts$",
+    "testPathIgnorePatterns": [
+      "<rootDir>/.*/(files|other-files)",
+      "<rootDir>/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test.js"
+    ]
+  },
+  "peerDependencies": {
+    "@schematics/angular": ">= 8.2.0",
+    "@angular-devkit/core": ">= 8.2.0",
+    "@angular-devkit/schematics": ">= 8.2.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/core": "^8.2.0",
+    "@angular-devkit/schematics": "^8.2.0",
+    "@types/jest": "^24.0.17",
+    "@types/node": "^10.0.0",
+    "jest": "^24.9.0",
+    "jest-extended": "^0.11.0",
+    "json-schema-to-typescript": "^5.4.0",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^24.1.0",
+    "tsutils": "^3.5.2",
+    "typescript": "~3.5.3"
+  },
+  "dependencies": {
+    "@phenomnomnominal/tsquery": "^3.0.0",
+    "@schematics/angular": "^8.2.0"
+  }
+}

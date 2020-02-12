@@ -1,0 +1,51 @@
+{
+  "printWidth": 120,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "parser": "flow",
+  "overrides": [
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "typescript"
+      }
+    },
+    {
+      "files": ["*.json", ".*.json", "*.code-snippets", "*.webmanifest"],
+      "options": {
+        "parser": "json",
+        "printWidth": 80
+      }
+    },
+    {
+      "files": "*.md",
+      "options": {
+        "parser": "markdown"
+      }
+    },
+    {
+      "files": "*.scss",
+      "options": {
+        "parser": "scss"
+      }
+    },
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "angular"
+      }
+    },
+    {
+      "files": ["*.yml", "*.yaml", ".*.yml"],
+      "options": {
+        "parser": "yaml"
+      }
+    }
+  ]
+}

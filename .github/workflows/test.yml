@@ -1,0 +1,173 @@
+name: TestCI
+
+on: [push]
+
+jobs:
+  Quality:
+    runs-on: ubuntu-16.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cache-
+
+      - name: Install root dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Code Quality
+        run: |
+          npm run format
+          bash scripts/ci-test-no-changes.sh 'you probably committed unformatted code'
+
+      - name: Compile
+        run: |
+          npm run ng -- build --aot
+          npx tsc -p tsconfig.spec.json
+          (cd schematics && npm run build && bash ../scripts/ci-test-no-changes.sh 'you probably committed unformatted code')
+          (cd tslint-rules && npm run build && bash ../scripts/ci-test-no-changes.sh 'you probably committed unformatted code')
+
+      - name: Lint by action
+        uses: mooyoul/tslint-actions@v1.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project: 'tsconfig.json'
+
+  Jest:
+    runs-on: ubuntu-16.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install root dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Test Jest
+        run: |
+          npm test
+
+  Build:
+    runs-on: ubuntu-16.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install root dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Disable ServiceWorker
+        run: |
+          sed -i "s/serviceWorker:.*/serviceWorker:false,/" src/environments/environment.prod.ts
+
+      - name: Set ICM URL
+        run: |
+          sed -i "s%icmBaseURL:.*%icmBaseURL:'${{ secrets.ICM_BASE_URL }}',%" src/environments/environment.prod.ts
+
+      - name: Print Environment
+        run: |
+          set +x
+          cat src/environments/environment.ts
+          cat src/environments/environment.prod.ts
+
+      - name: Build SSR
+        run: |
+          npm run build
+
+      - name: Upload Build Output
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: dist
+
+  Schematics:
+    needs: [Build, Quality, Jest]
+    runs-on: ubuntu-16.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install root dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Test Schematics
+        run: |
+          bash e2e/test-schematics.sh
+          sh scripts/ci-check-no-additional-warnings.sh
+
+  Cypress:
+    needs: Build
+    runs-on: ubuntu-16.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        test:
+          [
+            '*mock*',
+            '*b2b*',
+            'account/*b2c*',
+            'checkout/*b2c*',
+            'shopping/*b2c*',
+            # TODO: include remaining in a general way
+            # '!(shopping|account|checkout)*/*b2c*'
+            # '@(cms|contact)*/*b2c*'
+          ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install root dependencies
+        if: matrix.test == '*mock*'
+        uses: bahmutov/npm-install@v1
+
+      - name: Download Build Output
+        if: matrix.test != '*mock*'
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+
+      - name: Cypress
+        uses: cypress-io/github-action@master
+        with:
+          start: ${{ matrix.test == '*mock*' && 'npm run ng -- serve' || 'npm run serve > /dev/null 2>&1' }}
+          wait-on: 'http://localhost:4200'
+          wait-on-timeout: 180
+          working-directory: e2e
+          config: testFiles=**/${{ matrix.test }}.e2e-spec.ts,video=true,videoUploadOnPasses=false,chromeWebSecurity=false
+          browser: chrome
+          env: PWA_BASE_URL=http://localhost:4200,ICM_BASE_URL=${{ secrets.ICM_BASE_URL }}
+
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: screenshots
+          path: e2e/cypress/screenshots
+
+      - name: Upload Videos
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: videos
+          path: e2e/cypress/videos
