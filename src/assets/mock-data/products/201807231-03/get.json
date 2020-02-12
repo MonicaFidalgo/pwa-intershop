@@ -107,7 +107,7 @@
       "viewID": "back"
     },
     {
-      "effectiveUrl": "assets/img/not_available.png",
+      "effectiveUrl": "assets/img/L/L_201807201_front.jpg",
       "imageActualHeight": 500,
       "imageActualWidth": 500,
       "name": "front L",
@@ -117,7 +117,7 @@
       "viewID": "front"
     },
     {
-      "effectiveUrl": "assets/img/not_available.png",
+      "effectiveUrl": "assets/img/M/M_201807201_front.jpg",
       "imageActualHeight": 270,
       "imageActualWidth": 270,
       "name": "front M",
@@ -127,7 +127,7 @@
       "viewID": "front"
     },
     {
-      "effectiveUrl": "assets/img/not_available.png",
+      "effectiveUrl": "assets/img/S/S_201807201_front.jpg",
       "imageActualHeight": 110,
       "imageActualWidth": 110,
       "name": "front S",

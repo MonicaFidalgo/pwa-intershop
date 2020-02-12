@@ -97,12 +97,12 @@
                               "domain": "inSPIRED-inTRONICS-b2c-responsive",
                               "configurationParameters": {
                                 "ImageXS": {
-                                  "value": "https://intershoppwa.azurewebsites.net/INTERSHOP/static/WFS/inSPIRED-inTRONICS-Site/-/inSPIRED-inTRONICS-b2c-responsive/en_US/pwa/pwa_home_teaser_1.jpg",
+                                  "value": "assets/img/pwa_home_teaser_1.jpg",
                                   "type": "bc_pmc:types.pagelet2-ImageFileRef",
                                   "definitionQualifiedName": "app_sf_responsive_cm:component.common.imageEnhanced.pagelet2-Component-ImageXS"
                                 },
                                 "Image": {
-                                  "value": "https://intershoppwa.azurewebsites.net/INTERSHOP/static/WFS/inSPIRED-inTRONICS-Site/-/inSPIRED-inTRONICS-b2c-responsive/en_US/pwa/pwa_home_teaser_1.jpg",
+                                  "value": "assets/img/pwa_home_teaser_1.jpg",
                                   "type": "bc_pmc:types.pagelet2-ImageFileRef",
                                   "definitionQualifiedName": "app_sf_responsive_cm:component.common.imageEnhanced.pagelet2-Component-Image"
                                 },
@@ -127,12 +127,12 @@
                               "domain": "inSPIRED-inTRONICS-b2c-responsive",
                               "configurationParameters": {
                                 "ImageXS": {
-                                  "value": "https://intershoppwa.azurewebsites.net/INTERSHOP/static/WFS/inSPIRED-inTRONICS-Site/-/inSPIRED-inTRONICS-b2c-responsive/en_US/pwa/pwa_home_teaser_2.jpg",
+                                  "value": "assets/img/pwa_home_teaser_2.jpg",
                                   "type": "bc_pmc:types.pagelet2-ImageFileRef",
                                   "definitionQualifiedName": "app_sf_responsive_cm:component.common.imageEnhanced.pagelet2-Component-ImageXS"
                                 },
                                 "Image": {
-                                  "value": "https://intershoppwa.azurewebsites.net/INTERSHOP/static/WFS/inSPIRED-inTRONICS-Site/-/inSPIRED-inTRONICS-b2c-responsive/en_US/pwa/pwa_home_teaser_2.jpg",
+                                  "value": "assets/img/pwa_home_teaser_2.jpg",
                                   "type": "bc_pmc:types.pagelet2-ImageFileRef",
                                   "definitionQualifiedName": "app_sf_responsive_cm:component.common.imageEnhanced.pagelet2-Component-Image"
                                 },
